@@ -2,7 +2,7 @@
 
 require 'erb'
 
-def to_html(random_url)
+def to_html(piece)
   board_template = ERB.new File.read('board.erb')
   board = board_template.result(binding)
 
