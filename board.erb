@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='UTF-8'>
+  <title>Chess!</title>
+  <style>
+    /* Add CSS for the chessboard here */
+    main{
+      display: flex;
+      flex-direction: row;
+    }
+    .board {
+      display: grid;
+      grid-template-columns: repeat(8, 50px);
+      grid-template-rows: repeat(8, 50px);
+    }
+    .square {
+      position: relative;
+      display: flex;
+      width: 50px;
+      height: 50px;
+      font-size: 11px;
+      padding: 0;
+    }
+    .square img{
+      position: absolute;
+      width: 50px;
+      height: 50px;
+    }
+    .square #row{
+      position: absolute;
+      bottom:0;
+      right:0;
+      margin: 0;
+    }
+    .square #col{
+      position: absolute;
+      top:0;
+      left:0;
+      margin: 0;
+    }
+    .even {
+      background-color: #eee;
+    }
+    .odd {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <h1> The Pave Chasers Chess Arena </h1>
+  <main>
+    <div id="board" class="board">
+      <% 8.times do |row| %>
+        <% 8.times do |col| %>
+          <div class="square <%= (row + col) % 2 == 0 ? 'even' : 'odd' %>">
+            <% if col == 0 %>
+              <p id="col"><%= "#{8 - row}" %></p>
+            <% end %>
+            <% if  row == 7 %>
+              <p id="row"><%= "#{('a'.ord + col).chr}" %></p>
+            <% end %>
+            <% if row == 5 && col == 5  %>
+            <%= "<img src='#{random_url}' alt='ops'/>"%>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+    <div id="history">
+      <!-- Your chess move history can be displayed here -->
+      <ul>
+        <li>1. e4</li>
+        <li>1... e5</li>
+        <!-- Add more moves as needed -->
+      </ul>
+    </div>
+  </main>
+</body>
+</html>
