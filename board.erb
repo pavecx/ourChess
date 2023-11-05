@@ -51,8 +51,8 @@
   <h1> The Pave Chasers Chess Arena </h1>
   <main>
     <div id="board" class="board">
-      <% 8.times do |row| %>
-        <% 8.times do |col| %>
+    <% @square.each_with_index do |lines, row| %>
+        <% lines.each_with_index do |piece, col| %>
           <div class="square <%= (row + col) % 2 == 0 ? 'even' : 'odd' %>">
             <% if col == 0 %>
               <p id="col"><%= "#{8 - row}" %></p>
@@ -60,8 +60,8 @@
             <% if  row == 7 %>
               <p id="row"><%= "#{('a'.ord + col).chr}" %></p>
             <% end %>
-            <% if row == 5 && col == 5  %>
-              <%= "<img src='#{piece}' alt='ops'/>"%>
+            <% if piece.is_a?(Piece) %>
+              <%= "<img src='#{piece.url}' alt='ops'/>"%>
             <% end %>
           </div>
         <% end %>

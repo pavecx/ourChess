@@ -1,7 +1,7 @@
 # frozen_string_literal:true
 
-require 'piece'
 require 'erb'
+load 'piece.rb'
 
 # Define the Board
 class Board
@@ -20,6 +20,8 @@ class Board
     @black_king_bishop = Bishop.new(false)
     @black_king_knight = Horse.new(false)
     @black_king_rook = Rook.new(false)
+    @square[0] = [@black_quenn_rook, @black_quenn_knight, @black_quenn_bishop, @black_queen,
+                  @black_king, @black_king_bishop, @black_king_knight, @black_king_rook]
   end
 
   def setup_white
@@ -31,6 +33,8 @@ class Board
     @white_king_bishop = Bishop.new(true)
     @white_king_knight = Horse.new(true)
     @white_king_rook = Rook.new(true)
+    @square[7] = [@white_quenn_rook, @white_quenn_knight, @white_quenn_bishop, @white_queen,
+                  @white_king, @white_king_bishop, @white_king_knight, @white_king_rook]
   end
 
   def to_html(piece)

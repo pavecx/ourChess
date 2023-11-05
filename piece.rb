@@ -2,6 +2,8 @@
 
 # Class that defines a generic piece
 class Piece
+  attr_reader :url
+
   def initialize(is_white)
     @is_white = is_white
     @url = ' '
@@ -12,10 +14,6 @@ class Piece
 
   def valid?(move)
     @move_set.include(move)
-  end
-
-  def url
-    puts @url
   end
 end
 

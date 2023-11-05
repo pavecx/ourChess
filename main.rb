@@ -1,6 +1,6 @@
 # frozen_string_literal:true
 
-load 'html_converter.rb'
+load 'board.rb'
 
 board = Board.new
 
