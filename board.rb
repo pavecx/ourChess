@@ -37,6 +37,14 @@ class Board
                   @white_king, @white_king_bishop, @white_king_knight, @white_king_rook]
   end
 
+  def input(msg)
+    move = msg.split('')
+    move.pop if move[-1] == '+'
+    return gameover if move[-1] == '#'
+
+    new_position = ['abcdefgh'.find_index(move[-2]), (move[-1].to_i - 1)]
+  end
+
   def to_html
     board_template = ERB.new File.read('board.erb')
     board = board_template.result(binding)
