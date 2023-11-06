@@ -12,32 +12,32 @@ class Board
   end
 
   def setup_black
-    @black_quenn_rook = Rook.new(false)
-    @black_quenn_knight = Horse.new(false)
-    @black_quenn_bishop = Bishop.new(false)
-    @black_queen = Queen.new(false)
-    @black_king = King.new(false)
-    @black_king_bishop = Bishop.new(false)
-    @black_king_knight = Horse.new(false)
-    @black_king_rook = Rook.new(false)
+    @black_quenn_rook = Rook.new(false, [0, 0])
+    @black_quenn_knight = Horse.new(false, [0, 1])
+    @black_quenn_bishop = Bishop.new(false, [0, 2])
+    @black_queen = Queen.new(false, [0, 3])
+    @black_king = King.new(false, [0, 4])
+    @black_king_bishop = Bishop.new(false, [0, 5])
+    @black_king_knight = Horse.new(false, [0, 6])
+    @black_king_rook = Rook.new(false, [0, 7])
     @square[0] = [@black_quenn_rook, @black_quenn_knight, @black_quenn_bishop, @black_queen,
                   @black_king, @black_king_bishop, @black_king_knight, @black_king_rook]
   end
 
   def setup_white
-    @white_quenn_rook = Rook.new(true)
-    @white_quenn_knight = Horse.new(true)
-    @white_quenn_bishop = Bishop.new(true)
-    @white_queen = Queen.new(true)
-    @white_king = King.new(true)
-    @white_king_bishop = Bishop.new(true)
-    @white_king_knight = Horse.new(true)
-    @white_king_rook = Rook.new(true)
+    @white_quenn_rook = Rook.new(true, [7, 0])
+    @white_quenn_knight = Horse.new(true, [7, 1])
+    @white_quenn_bishop = Bishop.new(true, [7, 2])
+    @white_queen = Queen.new(true, [7, 3])
+    @white_king = King.new(true, [7, 4])
+    @white_king_bishop = Bishop.new(true, [7, 5])
+    @white_king_knight = Horse.new(true, [7, 6])
+    @white_king_rook = Rook.new(true, [7, 7])
     @square[7] = [@white_quenn_rook, @white_quenn_knight, @white_quenn_bishop, @white_queen,
                   @white_king, @white_king_bishop, @white_king_knight, @white_king_rook]
   end
 
-  def to_html(piece)
+  def to_html
     board_template = ERB.new File.read('board.erb')
     board = board_template.result(binding)
 
