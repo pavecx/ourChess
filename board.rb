@@ -7,8 +7,23 @@ load 'piece.rb'
 class Board
   def initialize
     @square = Array.new(8) { Array.new(8, 0) }
+    @gameover = false
+    @turn_player = false
+    setup
+
+    until gameover?
+      @turn_player = !@turn_player
+      move
+      to_html
+    end
+
+    puts @turn_player ? 'White Pieces Win' : 'Black Pieces Win'
+  end
+
+  def setup
     setup_black
     setup_white
+    to_html
   end
 
   def setup_black
@@ -37,12 +52,34 @@ class Board
                   @white_king, @white_king_bishop, @white_king_knight, @white_king_rook]
   end
 
-  def input(msg)
+  def move
+    valid = false
+    until valid
+      msg = gets.chomp
+      if msg == 'ff'
+        @turn_player = !turn_player
+        return gameover
+      end
+      valid = eval_move(msg)
+    end
+  end
+
+  def eval_move(msg)
     move = msg.split('')
     move.pop if move[-1] == '+'
     return gameover if move[-1] == '#'
 
     new_position = ['abcdefgh'.find_index(move[-2]), (move[-1].to_i - 1)]
+    piece = 'RNBQK'.find_index(move[0])
+    piece_move(piece, new_position, move)
+  end
+
+  def gameover
+    @gameover = true
+  end
+
+  def gameover?
+    @gameover
   end
 
   def to_html
