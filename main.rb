@@ -2,6 +2,4 @@
 
 load 'board.rb'
 
-board = Board.new
-
-board.to_html
+Board.new

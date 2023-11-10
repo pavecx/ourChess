@@ -23,7 +23,18 @@ class Board
   def setup
     setup_black
     setup_white
+    setup_pawns
     to_html
+  end
+
+  def setup_pawns
+    8.times do |index|
+      @square[1, index] = Piece.new(false, [1, index - 1])
+    end
+
+    8.times do |index|
+      @square[6, index] = Piece.new(true, [6, index - 1])
+    end
   end
 
   def setup_black
@@ -72,6 +83,16 @@ class Board
     new_position = ['abcdefgh'.find_index(move[-2]), (move[-1].to_i - 1)]
     piece = 'RNBQK'.find_index(move[0])
     piece_move(piece, new_position, move)
+  end
+
+  def piece_move(piece, new_position, move)
+    destination_piece = board[new_position]
+    return false if destination_piece.is_a?(Piece) && destination_piece.is_white == @turn_player
+
+    piece = select_piece(piece, new_position)
+    return selector(move) if piece.length > 1
+
+    true
   end
 
   def gameover

@@ -2,18 +2,23 @@
 
 # Class that defines a generic piece
 class Piece
-  attr_reader :url
+  attr_reader :url, :is_white
 
-  def initialize(is_white)
+  def initialize(is_white, position)
     @is_white = is_white
-    @url = ' '
+    @url = 'https://upload.wikimedia.org/wikipedia/commons/4/45/Chess_plt45.svg'
+    @url = 'https://upload.wikimedia.org/wikipedia/commons/c/c7/Chess_pdt45.svg' unless is_white
     @dead = false
-    @move_set = [[1, 1]]
-    @position = [1, 1]
+    @position = position
   end
 
-  def valid?(move)
-    @move_set.include(move)
+  def self.move(move, capture)
+    row = capture ? 1 : 0
+    col = @is_white ? -1 : 1
+
+    return position if position + [row, col] == move
+
+    false
   end
 end
 
