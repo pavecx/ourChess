@@ -29,11 +29,13 @@ class Board
 
   def setup_pawns
     8.times do |index|
-      @square[1, index] = Piece.new(false, [1, index - 1])
+      a = Piece.new(false, [1, index - 1])
+      @square[1][index] = a
     end
 
     8.times do |index|
-      @square[6, index] = Piece.new(true, [6, index - 1])
+      a = Piece.new(true, [6, index - 1])
+      @square[6][index] = a
     end
   end
 
@@ -80,13 +82,13 @@ class Board
     move.pop if move[-1] == '+'
     return gameover if move[-1] == '#'
 
-    new_position = ['abcdefgh'.find_index(move[-2]), (move[-1].to_i - 1)]
-    piece = 'RNBQK'.find_index(move[0])
+    new_position = ['abcdefgh'.index(move[-2]), (move[-1].to_i - 1)]
+    piece = 'RNBQK'.index(move[0])
     piece_move(piece, new_position, move)
   end
 
   def piece_move(piece, new_position, move)
-    destination_piece = board[new_position]
+    destination_piece = @square[new_position[0]][new_position[1]]
     return false if destination_piece.is_a?(Piece) && destination_piece.is_white == @turn_player
 
     piece = select_piece(piece, new_position)

@@ -30,6 +30,18 @@ class Horse < Piece
     @url = 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Chess_ndt45.svg' unless @is_white
     @position = position
   end
+
+  def self.move(move)
+    possibilities = []
+    [-2, -1, 1, 2].each do |row|
+      [-2, -1, 1, 2].each do |col|
+        new_row = move[0] + row
+        new_col = move[1] + col
+        possibilities.push([new_row, new_col]) if (0..7).cover?(new_row) && (0..7).cover?(new_col)
+      end
+    end
+    possibilities
+  end
 end
 
 # Class that defines the Bishy buddy piece
