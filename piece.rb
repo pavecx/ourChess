@@ -12,13 +12,22 @@ class Piece
     @position = position
   end
 
-  def self.move(move, capture)
-    row = capture ? 1 : 0
-    col = @is_white ? -1 : 1
+  def valid_move?(move, delta)
+    result = move.zip(delta).map { |m, d| m + d }
+    result[0].between?(0, 7) && result[1].between?(0, 7)
+  end
 
-    return position if position + [row, col] == move
+  def self.pawn_moves(move)
+    possibilities = []
 
-    false
+    # Define the possible directions for pawn moves based on color
+    directions = @is_white ? [[-1, 0], [-2, 0] [-1, 1], [-1, -1]] : [[1, 0], [2, 0], [1, 1], [1, -1]]
+
+    directions.each do |delta|
+      possibilities.push(move.zip(delta).map { |m, d| m + d }) if valid_move?(move, delta)
+    end
+
+    possibilities
   end
 end
 
@@ -52,6 +61,22 @@ class Bishop < Piece
     @url = 'https://upload.wikimedia.org/wikipedia/commons/9/98/Chess_bdt45.svg' unless @is_white
     @position = position
   end
+
+  def valid_move?(move, delta)
+    result = move.zip(delta).map { |m, d| m + d }
+    result[0].between?(0, 7) && result[1].between?(0, 7)
+  end
+
+  def self.move(move)
+    possibilities
+    delta_values = [[1, 1], [-1, 1], [1, -1], [-1, -1]]
+
+    delta_values.each do |delta|
+      possibilities.push(move.zip(delta).map { |m, d| m + d }) if valid_move?(move, delta)
+    end
+
+    possibilities
+  end
 end
 
 # Class that defines the Rookie piece
@@ -61,6 +86,22 @@ class Rook < Piece
     @url = 'https://upload.wikimedia.org/wikipedia/commons/7/72/Chess_rlt45.svg'
     @url = 'https://upload.wikimedia.org/wikipedia/commons/f/ff/Chess_rdt45.svg' unless @is_white
     @position = position
+  end
+
+  def valid_move?(move, delta)
+    result = move.zip(delta).map { |m, d| m + d }
+    result[0].between?(0, 7) && result[1].between?(0, 7)
+  end
+
+  def self.move(move)
+    possibilities = []
+    delta_values = [[1, 0], [-1, 0], [0, -1], [0, 1]]
+
+    delta_values.each do |delta|
+      possibilities.push(move.zip(delta).map { |m, d| m + d }) if valid_move?(move, delta)
+    end
+
+    possibilities
   end
 end
 
@@ -72,6 +113,22 @@ class Queen < Piece
     @url = 'https://upload.wikimedia.org/wikipedia/commons/4/47/Chess_qdt45.svg' unless @is_white
     @position = position
   end
+
+  def valid_move?(move, delta)
+    result = move.zip(delta).map { |m, d| m + d }
+    result[0].between?(0, 7) && result[1].between?(0, 7)
+  end
+
+  def self.move(move)
+    possibilities
+    delta_values = [[1, 1], [-1, 1], [1, -1], [-1, -1], [1, 0], [-1, 0], [0, -1], [0, 1]]
+
+    delta_values.each do |delta|
+      possibilities.push(move.zip(delta).map { |m, d| m + d }) if valid_move?(move, delta)
+    end
+
+    possibilities
+  end
 end
 
 # Class that defines the King piece
@@ -81,5 +138,21 @@ class King < Piece
     @url = 'https://upload.wikimedia.org/wikipedia/commons/4/42/Chess_klt45.svg'
     @url = 'https://upload.wikimedia.org/wikipedia/commons/f/f0/Chess_kdt45.svg' unless @is_white
     @position = position
+  end
+
+  def valid_move?(move, delta)
+    result = move + delta
+    result[0].between?(0, 7) && result[1].between?(0, 7)
+  end
+
+  def self.move(move)
+    possibilities
+    delta_values = [[1, 1], [-1, 1], [1, -1], [-1, -1], [1, 0], [-1, 0], [0, -1], [0, 1]]
+
+    delta_values.each do |delta|
+      possibilities.push(move + delta) if valid_move?(move, delta)
+    end
+
+    possibilities
   end
 end
